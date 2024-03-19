@@ -22,7 +22,7 @@ const isValidEmail = (input) => {
   if (re.test(input.value.trim())) {
     showSuccess(input)
   } else {
-    showError(input, "Email is not correct")
+    showError(input, "Email is not valid")
   }
 }
 
@@ -52,10 +52,8 @@ const checkLength = (input, min, max) => {
 }
 
 const checkPsw = (input1, input2) => {
-  if (input1.value !== input2.value) {
+  if (input1.value.toString() !== input2.value.toString()) {
     showError(input2, "Password do not match")
-  } else {
-    showSuccess(input)
   }
 }
 
