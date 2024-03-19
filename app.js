@@ -16,9 +16,8 @@ const showSuccess = (input) => {
   formControl.className = "form-control success"
 }
 
-const isValidEmail = (input) => {
+function checkEmail(input) {
   const re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
-
   if (re.test(input.value.trim())) {
     showSuccess(input)
   } else {
@@ -29,7 +28,7 @@ const isValidEmail = (input) => {
 const checkRequired = (array) => {
   array.forEach((input) => {
     if (input.value.trim() === "") {
-      showError(input, `${getFieldName(input)}  is required`)
+      showError(input, `${getFieldName(input)} is required`)
     } else {
       showSuccess(input)
     }
@@ -44,16 +43,16 @@ function getFieldName(input) {
 const checkLength = (input, min, max) => {
   if (input.value.length < min) {
     showError(input, `${getFieldName(input)} must be at least ${min} carachters`)
-  } else if (inpput.value.length > max) {
+  } else if (input.value.length > max) {
     showError(input, `${getFieldName(input)} must be at less than ${max} carachters`)
   } else {
     showSuccess(success)
   }
 }
 
-const checkPsw = (input1, input2) => {
-  if (input1.value.toString() !== input2.value.toString()) {
-    showError(input2, "Password do not match")
+function checkPasswordsMatch(input1, input2) {
+  if (input1.value !== input2.value) {
+    showError(input2, "Passwords do not match")
   }
 }
 
@@ -63,7 +62,8 @@ form.addEventListener("submit", (e) => {
 
   checkRequired([username, email, password, password2])
   checkLength(username, 3, 15)
-  isValidEmail(email)
+  checkEmail(email)
+  checkPasswordsMatch(password, password2)
   checkLength(password, 6, 25)
-  checkPsw(password, password2)
+  checkLength(password2, 6, 25)
 })
